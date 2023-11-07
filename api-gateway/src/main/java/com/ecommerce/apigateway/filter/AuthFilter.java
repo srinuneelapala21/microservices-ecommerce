@@ -6,7 +6,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+
 
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
@@ -41,9 +41,6 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                    // Boolean isValidToken = authClient.validateToken(authHeader);
                return webClientBuilder.build().get().uri("http://AUTH-SERVICE/auth-service/validate-token?token=" + authHeader)
                         .retrieve().bodyToMono(Token.class)
-//                System.out.println("---------------------------------");
-//                tokenMono.subscribe(System.out::println);
-//                System.out.println("---------------------------------");
                         .flatMap(token -> {
                             System.out.println("Response Content: " + token);
                                     if (token.isValid) {
