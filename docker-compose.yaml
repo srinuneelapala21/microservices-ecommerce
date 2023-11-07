@@ -1,0 +1,71 @@
+version: '3.7'
+services:
+  mysqldb:
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    networks:
+      - microservices-network
+    environment:
+      MYSQL_ROOT_PASSWORD: root@12345
+      MYSQL_DATABASE: microservices
+  product-service:
+    image: neelapalasrinu2001/microservice-product-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - 8000:8000
+    networks:
+      - microservices-network
+    depends_on:
+      - discovery-service
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://discovery-service:8761/eureka
+      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+  order-service:
+    image: neelapalasrinu2001/microservice-order-service:0.0.2-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - 9000:9000
+    networks:
+      - microservices-network
+    depends_on:
+      - mysqldb
+      - discovery-service
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://discovery-service:8761/eureka
+      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3307/microservices
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root@12345
+    restart: always 
+
+  discovery-service:
+    image: neelapalasrinu2001/microservice-discovery-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - 8761:8761
+    networks:
+      - microservices-network
+  api-gateway-service:
+    image: neelapalasrinu2001/microservice-api-gateway:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - 8765:8765
+    networks:
+      - microservices-network
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://discovery-service:8761/eureka
+      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+  zipkin-server:
+    image: openzipkin/zipkin:2.23
+    mem_limit: 300m
+    ports:
+      - "9411:9411"
+    networks:
+      - microservices-network
+    restart: always 
+
+    
+
+networks:
+  microservices-network:
