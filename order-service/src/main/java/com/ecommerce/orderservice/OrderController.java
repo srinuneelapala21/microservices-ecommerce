@@ -16,6 +16,11 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
+    @GetMapping("/get-order")
+    public Order getOrder(@RequestParam("orderId") Integer orderId){
+        return orderService.getOrder(orderId);
+    }
+
 //    @CircuitBreaker(name = "product-service",fallbackMethod = "productServiceFallbackMethod")
     @PostMapping("/create-order/product-id/{productId}/quantity/{quantity}")
     public Order createOrder(@PathVariable("productId") Integer productId,@PathVariable("quantity") Integer  quantity){

@@ -19,7 +19,9 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-
+    public Order getOrder(int orderId){
+        return orderRepository.findById(orderId).orElse(null);
+    }
     public Order createOrder(Integer productId,Integer quantity) {
 
         //call to the product serivce

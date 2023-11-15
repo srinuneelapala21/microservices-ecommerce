@@ -36,4 +36,12 @@ public class ProductService {
     public List<Product> saveProducts(List<Product> products) {
         return productRepository.saveAll(products);
     }
+
+    public Product getProductsForNormalUser() {
+        return new Product(1,"NormalProduct","Its a product for NormalUser",100.0,1,"Normal");
+    }
+
+    public Product getProductsForGoldenUser() {
+        return new Product(3,"PrimeProduct","Its a product for Prime User",0.0,10,"Prime");
+    }
 }

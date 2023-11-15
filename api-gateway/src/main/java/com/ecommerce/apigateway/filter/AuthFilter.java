@@ -1,5 +1,6 @@
 package com.ecommerce.apigateway.filter;
 
+import com.ecommerce.apigateway.dto.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;

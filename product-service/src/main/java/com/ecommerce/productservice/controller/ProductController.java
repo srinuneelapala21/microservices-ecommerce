@@ -25,6 +25,16 @@ public class ProductController {
         return productService.getProductsById(id);
     }
 
+    @GetMapping("/get-products/normalUser")
+    public Product getProductsForNormalUser(){
+        return productService.getProductsForNormalUser();
+    }
+
+    @GetMapping("/get-products/goldenUser")
+    public Product getProductsForGoldenUser(){
+        return productService.getProductsForGoldenUser();
+    }
+
 
     @PutMapping("/update-stock/product-id/{productId}/quantity/{quantity}")
     public Product updateStock(@PathVariable(name = "productId") Integer productId,@PathVariable(name="quantity") Integer quantity){

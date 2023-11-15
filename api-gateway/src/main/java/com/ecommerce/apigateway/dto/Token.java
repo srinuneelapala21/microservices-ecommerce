@@ -1,4 +1,4 @@
-package com.ecommerce.apigateway.filter;
+package com.ecommerce.apigateway.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
