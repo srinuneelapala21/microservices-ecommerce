@@ -12,5 +12,6 @@ spring:
       server:
         git:
           default-label: main
-          uri: https://github.com/srinuneelapala21/configuration-properties.git
+#          uri: https://github.com/srinuneelapala21/configuration-properties.git
+          uri: file:///C:/Users/SAILS-DM316/Desktop/java/microservices_ecommerce/config-properties
 
